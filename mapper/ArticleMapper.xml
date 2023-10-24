@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="com.example.demo.mapper.UserMapper">-->
+<mapper namespace="com.example.demo.mapper.ArticleMapper">
+
+
+    <select id="getArtCountByUid" resultType="Integer">
+        select count(*) from articleinfo where uid = #{uid}
+    </select>
+    
+    <select id="getMyList" resultType="com.example.demo.entity.Articleinfo">
+        select *from articleinfo where uid=#{uid}
+    </select>
+
+    <delete id="del">
+        delete from articleinfo where id=#{id} and uid=#{uid}
+    </delete>
+
+    <select id = "getDetail" resultType = "com.example.demo.entity.Articleinfo">
+        select * from articleinfo where id=#{id}
+    </select>
+
+    <update id="incrRCount">
+        update articleinfo set rcount=rcount+1 where id=#{id}
+    </update>
+
+    <insert id="add">
+        insert into articleinfo(title,content,uid) values(#{title},#{content},#{uid})
+    </insert>
+
+    <update id="update">
+        update articleinfo set title=#{title},content=#{content},updatetime=#{updatetime}
+        where id=#{id} and uid=#{uid}
+    </update>
+
+    <select id="getListByPage" resultType="com.example.demo.entity.Articleinfo">
+        select * from articleinfo limit #{psize} offset #{offsize}
+    </select>
+
+    <select id="getCount" resultType="Integer">
+        select count(*) from articleinfo
+    </select>
+
+
+
+
+
+
+
+</mapper>
+
+<!--        这个文件是 MyBatis 中用于定义数据访问操作的关键部分。-->
+<!--        它将 SQL 查询和操作与 Java 代码连接起来，使得数据的访问变得简单和方便。-->
+<!--        이 파일은 MyBatis에서 데이터 액세스 작업을 정의하는 중요한 부분입니다. -->
+<!--        이 파일은 SQL 쿼리와 작업을 Java 코드와 연결하여 데이터 액세스를 간편하고 편리하게 만듭니다.-->
