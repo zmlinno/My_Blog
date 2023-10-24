@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册页面</title>
+    <link rel="stylesheet" href="css/conmmon.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/jquery.min.js"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+</head>
+
+<body>
+<!-- 导航栏 -->
+<div class="nav">
+    <img src="img/logo2.jpg" alt="">
+    <span class="title">MyBlog</span>
+    <!-- 用来占据中间位置 -->
+    <span class="spacer"></span>
+    <a href="blog_list.html">홈페이지</a>
+    <a href="blog_edit.html">블로그를 쓰다</a>
+    <a href="login.html">로그인</a>
+    <!-- <a href="#">注销</a> -->
+</div>
+<!-- 版心 -->
+<div class="login-container">
+    <!-- 中间的注册框 -->
+    <div class="login-dialog">
+        <h3>가입</h3>
+        <div class="row">
+            <span>아이디</span>
+            <input type="text" id="username">
+        </div>
+        <div class="row">
+            <span>비밀번호</span>
+            <input type="password" id="password">
+        </div>
+        <div class="row">
+            <span>비밀번호</span>
+            <input type="password" id="password2">
+        </div>
+        <div class="row">
+            <button id="submit" onclick="mysub()">제출</button>
+        </div>
+    </div>
+</div>
+<div class = "row">
+    <button id = "sumbit">제출</button>
+
+</div>
+<script>
+    // 提交注册事件
+    function mysub(){
+        // 1.非空效验
+        var username = jQuery("#username");
+        var password = jQuery("#password");
+        var password2 = jQuery("#password2");
+        if(username.val()==""){
+            alert("아이디 입력！");
+            username.focus(); // 将鼠标光标设置到用户名控件,这是这节课的。
+            return;
+        }
+        if(password.val()==""){
+            alert("비밀번호 입력！");
+            password.focus();
+            return;
+        }
+        if(password2.val()==""){
+            alert("다시 비밀번호 입력！");
+            password2.focus();
+            return;
+        }
+        // 2.判断两次密码是否一致
+        if(password.val()!=password2.val()){
+            alert("비밀번호 일치하지 않음！");
+            password.focus();
+            return;
+        }
+        // 3.ajax 提交请求
+        jQuery.ajax({ //阿贾克斯的操作，都使用的阿贾克斯请求
+            //写法简单，兼容性好，所以使用jQuery
+            url:"/user/reg",
+            type:"POST",//请求类型是啥
+            data:{"username":username.val(),"password":password.val()},
+            success:function(result){
+                // 响应的结果
+                if(result!=null && result.code==200 && result.data==1){
+                    // 执行成功
+                    if(confirm("가입했습니다.다음 홈페이지에 넘어갈까요？")){
+                        location.href = "/login.html";
+                    }
+                }else{
+                    alert("수행하기가 실패인데 다시 수행해주세요！");
+                }
+            }
+        });
+
+    }
+
+</script>
+</body>
+</html>
+<!--这是一个前端注册页面的系统已经完成-->
